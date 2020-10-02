@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Equipamento implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +25,7 @@ public class Equipamento implements Serializable {
 	private String descricao;
 	private String tonelagem;
 	
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "EQUIPAMENTO_EMPRESA",
 		joinColumns = @JoinColumn(name = "equipamento_id"),
