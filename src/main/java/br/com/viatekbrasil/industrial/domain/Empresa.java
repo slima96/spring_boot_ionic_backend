@@ -1,11 +1,14 @@
 package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Empresa implements Serializable {
@@ -15,6 +18,9 @@ public class Empresa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@ManyToMany(mappedBy = "empresas")
+	private List<Equipamento> equipamentos = new ArrayList<>();
 	
 	public Empresa() {
 	}
@@ -39,6 +45,14 @@ public class Empresa implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public List<Equipamento> getEquipamentos() {
+		return equipamentos;
+	}
+
+	public void setEquipamentos(List<Equipamento> equipamentos) {
+		this.equipamentos = equipamentos;
 	}
 
 	@Override
