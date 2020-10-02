@@ -1,16 +1,13 @@
 package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -26,22 +23,20 @@ public class Equipamento implements Serializable {
 	private String tonelagem;
 	
 	@JsonBackReference
-	@ManyToMany
-	@JoinTable(name = "EQUIPAMENTO_EMPRESA",
-		joinColumns = @JoinColumn(name = "equipamento_id"),
-		inverseJoinColumns = @JoinColumn(name = "empresa_id")
-	)	
-	private List<Empresa> empresas = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private Empresa empresa;
 	
 	public Equipamento() {
 	}
 
-	public Equipamento(Integer id, String codigo, String descricao, String tonelagem) {
+	public Equipamento(Integer id, String codigo, String descricao, String tonelagem, Empresa empresa) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.tonelagem = tonelagem;
+		this.empresa = empresa;
 	}
 
 	public Integer getId() {
@@ -76,12 +71,12 @@ public class Equipamento implements Serializable {
 		this.tonelagem = tonelagem;
 	}
 
-	public List<Empresa> getEmpresas() {
-		return empresas;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override
