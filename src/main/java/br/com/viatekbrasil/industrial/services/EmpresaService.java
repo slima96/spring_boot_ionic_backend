@@ -20,4 +20,9 @@ public class EmpresaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Empresa.class.getName()));
 	}
+	
+	public Empresa insert (Empresa obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
 }
