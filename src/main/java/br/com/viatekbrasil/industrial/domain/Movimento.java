@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.viatekbrasil.industrial.domain.enums.StatusMovimento;
 
@@ -30,7 +29,6 @@ public class Movimento implements Serializable {
 	private Date data;
 	private Integer status;
 	
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;

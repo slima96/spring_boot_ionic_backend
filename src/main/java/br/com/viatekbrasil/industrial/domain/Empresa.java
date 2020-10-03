@@ -10,8 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Empresa implements Serializable {
@@ -22,15 +21,15 @@ public class Empresa implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "empresa")
 	private List<Equipamento> equipamentos = new ArrayList<>();
 	
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "empresa")
 	private List<Produto> produtos = new ArrayList<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "empresa")
 	private List<Movimento> movimentos = new ArrayList<>();
 	
