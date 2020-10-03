@@ -2,6 +2,8 @@ package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -29,21 +32,18 @@ public class Movimento implements Serializable {
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
 	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "turno_id")
-	private Turno turno;
-	
+	@OneToMany(mappedBy = "id.movimento")
+	private Set<MovimentoDetalhe> itens = new HashSet<>();
+		
 	public Movimento() {
 	}
 
-	public Movimento(Integer id, Date data, StatusMovimento status, Empresa empresa, Turno turno) {
+	public Movimento(Integer id, Date data, StatusMovimento status, Empresa empresa) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.status = status.getCod();
 		this.empresa = empresa;
-		this.turno = turno;
 	}
 
 	public Integer getId() {
@@ -77,13 +77,13 @@ public class Movimento implements Serializable {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
-
-	public Turno getTurno() {
-		return turno;
+	
+	public Set<MovimentoDetalhe> getItens() {
+		return itens;
 	}
 
-	public void setTurno(Turno turno) {
-		this.turno = turno;
+	public void setItens(Set<MovimentoDetalhe> itens) {
+		this.itens = itens;
 	}
 
 	@Override
@@ -109,6 +109,5 @@ public class Movimento implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
+	}	
 }

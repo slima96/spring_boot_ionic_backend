@@ -12,12 +12,14 @@ import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.domain.Equipamento;
 import br.com.viatekbrasil.industrial.domain.Linha;
 import br.com.viatekbrasil.industrial.domain.Movimento;
+import br.com.viatekbrasil.industrial.domain.MovimentoDetalhe;
 import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.domain.Turno;
 import br.com.viatekbrasil.industrial.domain.enums.StatusMovimento;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
 import br.com.viatekbrasil.industrial.repositories.EquipamentoRepository;
 import br.com.viatekbrasil.industrial.repositories.LinhaRepository;
+import br.com.viatekbrasil.industrial.repositories.MovimentoDetalheRepository;
 import br.com.viatekbrasil.industrial.repositories.MovimentoRepository;
 import br.com.viatekbrasil.industrial.repositories.ProdutoRepository;
 import br.com.viatekbrasil.industrial.repositories.TurnoRepository;
@@ -42,6 +44,9 @@ public class IndustrialApplication implements CommandLineRunner {
 	
 	@Autowired
 	private MovimentoRepository movimentoRepository;
+	
+	@Autowired
+	private MovimentoDetalheRepository movimentoDetalheRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(IndustrialApplication.class, args);
@@ -81,16 +86,33 @@ public class IndustrialApplication implements CommandLineRunner {
 		l2.getProdutos().addAll(Arrays.asList(p2));
 		l3.getProdutos().addAll(Arrays.asList(p3));
 		
-		Movimento m1 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp1, t1);
-		Movimento m2 = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, emp2, t2);
-		Movimento m3 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp3, t1);
+		Movimento m1 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp1);
+		Movimento m2 = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, emp2);
+		Movimento m3 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp3);
 		
 		emp1.getMovimentos().addAll(Arrays.asList(m1));
 		emp2.getMovimentos().addAll(Arrays.asList(m2));
 		emp3.getMovimentos().addAll(Arrays.asList(m3));
 		
-		t1.getMovimentos().addAll(Arrays.asList(m1,m3));
-		t2.getMovimentos().addAll(Arrays.asList(m2));
+		MovimentoDetalhe md1 = new MovimentoDetalhe(p1, m1, t1, eq1, 10, 2, 3.0);
+		MovimentoDetalhe md2 = new MovimentoDetalhe(p2, m2, t2, eq2, 10, 2, 3.0);
+		MovimentoDetalhe md3 = new MovimentoDetalhe(p3, m3, t3, eq3, 10, 2, 3.0);
+		
+		m1.getItens().addAll(Arrays.asList(md1));
+		m2.getItens().addAll(Arrays.asList(md2));
+		m3.getItens().addAll(Arrays.asList(md3));
+		
+		p1.getItens().addAll(Arrays.asList(md1));
+		p2.getItens().addAll(Arrays.asList(md2));
+		p3.getItens().addAll(Arrays.asList(md3));
+		
+		t1.getItens().addAll(Arrays.asList(md1));
+		t2.getItens().addAll(Arrays.asList(md2));
+		t3.getItens().addAll(Arrays.asList(md3));
+		
+		eq1.getItens().addAll(Arrays.asList(md1));
+		eq2.getItens().addAll(Arrays.asList(md2));
+		eq3.getItens().addAll(Arrays.asList(md3));
 		
 		
 		empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
@@ -99,6 +121,8 @@ public class IndustrialApplication implements CommandLineRunner {
 		linhaRepository.saveAll(Arrays.asList(l1, l2, l3));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		movimentoRepository.saveAll(Arrays.asList(m1, m2, m3));
+		movimentoDetalheRepository.saveAll(Arrays.asList(md1,md2,md3));
+		
 	}
 
 }

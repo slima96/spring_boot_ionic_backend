@@ -1,6 +1,8 @@
 package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -26,6 +29,9 @@ public class Equipamento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
+	
+	@OneToMany(mappedBy = "id.equipamento")
+	private Set<MovimentoDetalhe> itens = new HashSet<>();
 	
 	public Equipamento() {
 	}
@@ -77,6 +83,14 @@ public class Equipamento implements Serializable {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public Set<MovimentoDetalhe> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<MovimentoDetalhe> itens) {
+		this.itens = itens;
 	}
 
 	@Override
