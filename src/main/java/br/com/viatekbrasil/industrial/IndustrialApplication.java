@@ -57,6 +57,10 @@ public class IndustrialApplication implements CommandLineRunner {
 		Empresa emp1 = new Empresa(null, "Viatek");
 		Empresa emp2 = new Empresa(null, "Viamed");
 		Empresa emp3 = new Empresa(null, "Gplast");
+		Empresa emp4 = new Empresa(null, "Polimero Matriz");
+		Empresa emp5 = new Empresa(null, "Polimero Filial");
+		Empresa emp6 = new Empresa(null, "JCS");
+		Empresa emp7 = new Empresa(null, "Mondial");		
 		
 		Linha l1 = new Linha(null, "Viatek");
 		Linha l2 = new Linha(null, "Mondial");
@@ -115,7 +119,7 @@ public class IndustrialApplication implements CommandLineRunner {
 		eq3.getItens().addAll(Arrays.asList(md3));
 		
 		
-		empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
+		empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7));
 		equipamentoRepository.saveAll(Arrays.asList(eq1, eq2, eq3));
 		turnoRepository.saveAll(Arrays.asList(t1, t2, t3));
 		linhaRepository.saveAll(Arrays.asList(l1, l2, l3));
