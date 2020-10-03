@@ -29,6 +29,10 @@ public class Empresa implements Serializable {
 	@OneToMany(mappedBy = "empresa")
 	private List<Produto> produtos = new ArrayList<>();
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "empresa")
+	private List<Movimento> movimentos = new ArrayList<>();
+	
 	public Empresa() {
 	}
 
@@ -68,6 +72,14 @@ public class Empresa implements Serializable {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public List<Movimento> getMovimentos() {
+		return movimentos;
+	}
+
+	public void setMovimentos(List<Movimento> movimentos) {
+		this.movimentos = movimentos;
 	}
 
 	@Override

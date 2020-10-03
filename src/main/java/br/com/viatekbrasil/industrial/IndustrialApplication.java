@@ -1,6 +1,7 @@
 package br.com.viatekbrasil.industrial;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,11 +11,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.domain.Equipamento;
 import br.com.viatekbrasil.industrial.domain.Linha;
+import br.com.viatekbrasil.industrial.domain.Movimento;
 import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.domain.Turno;
+import br.com.viatekbrasil.industrial.domain.enums.StatusMovimento;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
 import br.com.viatekbrasil.industrial.repositories.EquipamentoRepository;
 import br.com.viatekbrasil.industrial.repositories.LinhaRepository;
+import br.com.viatekbrasil.industrial.repositories.MovimentoRepository;
 import br.com.viatekbrasil.industrial.repositories.ProdutoRepository;
 import br.com.viatekbrasil.industrial.repositories.TurnoRepository;
 
@@ -35,6 +39,9 @@ public class IndustrialApplication implements CommandLineRunner {
 	
 	@Autowired
 	private TurnoRepository turnoRepository;
+	
+	@Autowired
+	private MovimentoRepository movimentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(IndustrialApplication.class, args);
@@ -74,12 +81,24 @@ public class IndustrialApplication implements CommandLineRunner {
 		l2.getProdutos().addAll(Arrays.asList(p2));
 		l3.getProdutos().addAll(Arrays.asList(p3));
 		
+		Movimento m1 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp1, t1);
+		Movimento m2 = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, emp2, t2);
+		Movimento m3 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp3, t1);
+		
+		emp1.getMovimentos().addAll(Arrays.asList(m1));
+		emp2.getMovimentos().addAll(Arrays.asList(m2));
+		emp3.getMovimentos().addAll(Arrays.asList(m3));
+		
+		t1.getMovimentos().addAll(Arrays.asList(m1,m3));
+		t2.getMovimentos().addAll(Arrays.asList(m2));
+		
+		
 		empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
 		equipamentoRepository.saveAll(Arrays.asList(eq1, eq2, eq3));
 		turnoRepository.saveAll(Arrays.asList(t1, t2, t3));
 		linhaRepository.saveAll(Arrays.asList(l1, l2, l3));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
-		
+		movimentoRepository.saveAll(Arrays.asList(m1, m2, m3));
 	}
 
 }
