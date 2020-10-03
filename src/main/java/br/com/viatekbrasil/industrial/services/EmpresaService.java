@@ -3,10 +3,12 @@ package br.com.viatekbrasil.industrial.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
+import br.com.viatekbrasil.industrial.services.exceptions.DataIntegrityException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -29,5 +31,16 @@ public class EmpresaService {
 	public Empresa update(Empresa obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível remover a Empresa. Esta sendo utilizada!");
+		}
+				
 	}
 }
