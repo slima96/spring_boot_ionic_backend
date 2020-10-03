@@ -29,10 +29,15 @@ public class Produto implements Serializable {
 	@JoinColumn(name = "linha_id")
 	private Linha linha;
 	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
+	private Empresa empresa;
+	
 	public Produto() {
 	}
 
-	public Produto(Integer id, String descricao, Integer ciclo, Integer cavidade, Double preco, Linha linha) {
+	public Produto(Integer id, String descricao, Integer ciclo, Integer cavidade, Double preco, Linha linha, Empresa empresa) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
@@ -40,6 +45,7 @@ public class Produto implements Serializable {
 		this.cavidade = cavidade;
 		this.preco = preco;
 		this.linha = linha;
+		this.empresa = empresa;
 	}
 
 	public Integer getId() {
@@ -88,6 +94,14 @@ public class Produto implements Serializable {
 
 	public void setLinha(Linha linha) {
 		this.linha = linha;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override
