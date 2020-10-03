@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -29,7 +30,7 @@ public class Empresa implements Serializable {
 	@OneToMany(mappedBy = "empresa")
 	private List<Produto> produtos = new ArrayList<>();
 	
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "empresa")
 	private List<Movimento> movimentos = new ArrayList<>();
 	

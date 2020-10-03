@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Equipamento implements Serializable {
@@ -30,6 +31,7 @@ public class Equipamento implements Serializable {
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.equipamento")
 	private Set<MovimentoDetalhe> itens = new HashSet<>();
 	

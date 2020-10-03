@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
@@ -39,6 +40,7 @@ public class Produto implements Serializable {
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.produto")
 	private Set<MovimentoDetalhe> itens = new HashSet<>();
 	
@@ -56,6 +58,7 @@ public class Produto implements Serializable {
 		this.empresa = empresa;
 	}
 	
+	@JsonIgnore
 	public List<Movimento> getMovimentos(){
 		List<Movimento> lista = new ArrayList<>();
 		for (MovimentoDetalhe x : itens) {
