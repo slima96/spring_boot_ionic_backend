@@ -18,7 +18,7 @@ public class TurnoResource {
 	private TurnoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Turno> find(@PathVariable Integer id) {
 		Turno obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}

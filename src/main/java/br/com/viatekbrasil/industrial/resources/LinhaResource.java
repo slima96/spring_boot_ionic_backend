@@ -18,7 +18,7 @@ public class LinhaResource {
 	private LinhaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Linha> find(@PathVariable Integer id) {
 		Linha obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
