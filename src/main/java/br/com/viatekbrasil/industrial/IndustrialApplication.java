@@ -11,10 +11,12 @@ import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.domain.Equipamento;
 import br.com.viatekbrasil.industrial.domain.Linha;
 import br.com.viatekbrasil.industrial.domain.Produto;
+import br.com.viatekbrasil.industrial.domain.Turno;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
 import br.com.viatekbrasil.industrial.repositories.EquipamentoRepository;
 import br.com.viatekbrasil.industrial.repositories.LinhaRepository;
 import br.com.viatekbrasil.industrial.repositories.ProdutoRepository;
+import br.com.viatekbrasil.industrial.repositories.TurnoRepository;
 
 @SpringBootApplication
 public class IndustrialApplication implements CommandLineRunner {
@@ -30,6 +32,9 @@ public class IndustrialApplication implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private TurnoRepository turnoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(IndustrialApplication.class, args);
@@ -44,6 +49,10 @@ public class IndustrialApplication implements CommandLineRunner {
 		Linha l1 = new Linha(null, "Viatek");
 		Linha l2 = new Linha(null, "Mondial");
 		Linha l3 = new Linha(null, "JCS");
+		
+		Turno t1 = new Turno(null, "T-1");
+		Turno t2 = new Turno(null, "T-2");
+		Turno t3 = new Turno(null, "T-3");
 		
 		Equipamento eq1 = new Equipamento(null, "mq-01", "maquina 1", "1800DT", emp1);
 		Equipamento eq2 = new Equipamento(null, "mq-02", "maquina 2", "1300DT", emp2);
@@ -67,6 +76,7 @@ public class IndustrialApplication implements CommandLineRunner {
 		
 		empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3));
 		equipamentoRepository.saveAll(Arrays.asList(eq1, eq2, eq3));
+		turnoRepository.saveAll(Arrays.asList(t1, t2, t3));
 		linhaRepository.saveAll(Arrays.asList(l1, l2, l3));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
