@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
+import br.com.viatekbrasil.industrial.dto.EmpresaDTO;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
 import br.com.viatekbrasil.industrial.services.exceptions.DataIntegrityException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
@@ -55,5 +56,9 @@ public class EmpresaService {
 	public Page<Empresa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Empresa fromDTO(EmpresaDTO objDTO) {
+		return new Empresa(objDTO.getId(), objDTO.getNome());
 	}
 }
