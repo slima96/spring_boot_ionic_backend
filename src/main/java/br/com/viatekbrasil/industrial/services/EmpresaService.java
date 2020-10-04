@@ -34,8 +34,9 @@ public class EmpresaService {
 	}
 	
 	public Empresa update(Empresa obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Empresa newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 
 	public void delete(Integer id) {
@@ -60,5 +61,10 @@ public class EmpresaService {
 	
 	public Empresa fromDTO(EmpresaDTO objDTO) {
 		return new Empresa(objDTO.getId(), objDTO.getNome());
+	}
+	
+	private void updateData(Empresa newObj, Empresa obj) {
+		newObj.setNome(obj.getNome());
+		
 	}
 }
