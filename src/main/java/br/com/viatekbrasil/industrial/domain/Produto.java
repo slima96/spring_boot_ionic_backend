@@ -18,18 +18,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String codigo;
 	private String descricao;
 	private Integer ciclo;
 	private Integer cavidade;
 	private Double preco;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "linha_id")
 	private Linha linha;
@@ -46,9 +45,10 @@ public class Produto implements Serializable {
 	public Produto() {
 	}
 
-	public Produto(Integer id, String descricao, Integer ciclo, Integer cavidade, Double preco, Linha linha, Empresa empresa) {
+	public Produto(Integer id,String codigo, String descricao, Integer ciclo, Integer cavidade, Double preco, Linha linha, Empresa empresa) {
 		super();
 		this.id = id;
+		this.codigo = codigo;
 		this.descricao = descricao;
 		this.ciclo = ciclo;
 		this.cavidade = cavidade;
@@ -72,6 +72,14 @@ public class Produto implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getDescricao() {

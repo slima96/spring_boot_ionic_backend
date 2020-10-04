@@ -44,7 +44,7 @@ public class EmpresaService {
 			repo.deleteById(id);
 		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível remover a Empresa. Esta sendo utilizada!");
+			throw new DataIntegrityException("Não é possível remover por que há entidades relacionadas");
 		}
 				
 	}

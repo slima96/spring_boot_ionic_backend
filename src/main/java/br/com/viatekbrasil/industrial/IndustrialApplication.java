@@ -78,9 +78,9 @@ public class IndustrialApplication implements CommandLineRunner {
 		emp2.getEquipamentos().addAll(Arrays.asList(eq2));
 		emp3.getEquipamentos().addAll(Arrays.asList(eq3));
 		
-		Produto p1 = new Produto(null, "Balde para concreto", 30, 1, 3.00, l1, emp1);
-		Produto p2 = new Produto(null, "Pivo mondial", 30, 1, 3.00, l2, emp2);
-		Produto p3 = new Produto(null, "Acoplamento JCS", 30, 1, 3.00, l3, emp3);
+		Produto p1 = new Produto(null,"10001", "Balde para concreto", 30, 1, 3.00, l1, emp1);
+		Produto p2 = new Produto(null,"10002", "Pivo mondial", 30, 1, 3.00, l2, emp2);
+		Produto p3 = new Produto(null,"10003", "Acoplamento JCS", 30, 1, 3.00, l3, emp3);
 		
 		emp1.getProdutos().addAll(Arrays.asList(p1));
 		emp2.getProdutos().addAll(Arrays.asList(p2));
