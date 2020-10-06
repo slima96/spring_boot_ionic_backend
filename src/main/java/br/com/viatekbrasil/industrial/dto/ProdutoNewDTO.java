@@ -2,6 +2,9 @@ package br.com.viatekbrasil.industrial.dto;
 
 import java.io.Serializable;
 
+import br.com.viatekbrasil.industrial.services.validation.ProdutoInsert;
+
+@ProdutoInsert
 public class ProdutoNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
