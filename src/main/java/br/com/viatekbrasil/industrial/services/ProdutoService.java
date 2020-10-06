@@ -10,8 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import br.com.viatekbrasil.industrial.domain.Empresa;
+import br.com.viatekbrasil.industrial.domain.Linha;
 import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.dto.ProdutoDTO;
+import br.com.viatekbrasil.industrial.dto.ProdutoNewDTO;
 import br.com.viatekbrasil.industrial.repositories.ProdutoRepository;
 import br.com.viatekbrasil.industrial.services.exceptions.DataIntegrityException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
@@ -26,6 +29,11 @@ public class ProdutoService {
 		Optional<Produto> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
+	}
+	
+	public Produto insert (Produto obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 	
 	public Produto update(Produto obj) {
@@ -56,6 +64,15 @@ public class ProdutoService {
 	
 	public Produto fromDTO(ProdutoDTO objDTO) {
 		return new Produto(objDTO.getId(), objDTO.getCodigo(), objDTO.getDescricao(), objDTO.getCiclo(), objDTO.getCavidade(), objDTO.getPreco(), null, null);
+	}
+	
+	public Produto fromDTO(ProdutoNewDTO objDTO) {
+		Linha linha = new Linha(objDTO.getLinhaid(), null);
+		Empresa empresa = new Empresa(objDTO.getEmpresaid(), null);
+		
+		Produto prod = new Produto(null, objDTO.getCodigo(), objDTO.getDescricao(), objDTO.getCiclo(), objDTO.getCavidade(), objDTO.getPreco(), linha, empresa);
+		
+		return prod;
 	}
 	
 	private void updateData(Produto newObj, Produto obj) {
