@@ -21,11 +21,11 @@ public class Empresa implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "empresa")
 	private List<Equipamento> equipamentos = new ArrayList<>();
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "empresa")
 	private List<Produto> produtos = new ArrayList<>();
 	

@@ -34,6 +34,7 @@ public class Produto implements Serializable {
 	private Integer cavidade;
 	private Double preco;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "linha_id")
 	private Linha linha;

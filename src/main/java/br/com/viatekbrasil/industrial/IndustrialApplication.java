@@ -82,11 +82,15 @@ public class IndustrialApplication implements CommandLineRunner {
 		Produto p2 = new Produto(null,"10002", "Pivo mondial", 30, 1, 3.00, l2, emp2);
 		Produto p3 = new Produto(null,"10003", "Acoplamento JCS", 30, 1, 3.00, l3, emp3);
 		
-		emp1.getProdutos().addAll(Arrays.asList(p1));
+		Produto p4 = new Produto(null,"20036", "Mangueira corrugada", 30, 1, 3.00, l1, emp1);
+		Produto p5 = new Produto(null,"20020", "Caixa 4x2", 30, 1, 3.00, l1, emp1);
+		Produto p6 = new Produto(null,"20030", "Caixa regulável", 30, 1, 3.00, l1, emp1);
+		
+		emp1.getProdutos().addAll(Arrays.asList(p1, p4,p5,p6));
 		emp2.getProdutos().addAll(Arrays.asList(p2));
 		emp3.getProdutos().addAll(Arrays.asList(p3));
 		
-		l1.getProdutos().addAll(Arrays.asList(p1));
+		l1.getProdutos().addAll(Arrays.asList(p1,p4,p5,p6));
 		l2.getProdutos().addAll(Arrays.asList(p2));
 		l3.getProdutos().addAll(Arrays.asList(p3));
 		
@@ -98,13 +102,11 @@ public class IndustrialApplication implements CommandLineRunner {
 		emp2.getMovimentos().addAll(Arrays.asList(m2));
 		emp3.getMovimentos().addAll(Arrays.asList(m3));
 		
-		MovimentoDetalhe md1 = new MovimentoDetalhe(p1, m1, t1, eq1, 10, 2, 3.0);
-		MovimentoDetalhe md2 = new MovimentoDetalhe(p2, m2, t2, eq2, 10, 2, 3.0);
-		MovimentoDetalhe md3 = new MovimentoDetalhe(p3, m3, t3, eq3, 10, 2, 3.0);
+		MovimentoDetalhe md1 = new MovimentoDetalhe(p1, m1, t1, eq1, 12.0, 10, 2, 3.0, 8000, 2000);
+		MovimentoDetalhe md2 = new MovimentoDetalhe(p2, m1, t2, eq2, 7.0, 10, 2, 3.0, 4000, 1000);
+		MovimentoDetalhe md3 = new MovimentoDetalhe(p3, m1, t3, eq3, 10.0, 10, 2, 3.0, 3000, 300);
 		
-		m1.getItens().addAll(Arrays.asList(md1));
-		m2.getItens().addAll(Arrays.asList(md2));
-		m3.getItens().addAll(Arrays.asList(md3));
+		m1.getItens().addAll(Arrays.asList(md1, md2, md3));
 		
 		p1.getItens().addAll(Arrays.asList(md1));
 		p2.getItens().addAll(Arrays.asList(md2));
@@ -123,7 +125,7 @@ public class IndustrialApplication implements CommandLineRunner {
 		equipamentoRepository.saveAll(Arrays.asList(eq1, eq2, eq3));
 		turnoRepository.saveAll(Arrays.asList(t1, t2, t3));
 		linhaRepository.saveAll(Arrays.asList(l1, l2, l3));
-		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
 		movimentoRepository.saveAll(Arrays.asList(m1, m2, m3));
 		movimentoDetalheRepository.saveAll(Arrays.asList(md1,md2,md3));
 		

@@ -31,6 +31,12 @@ public class ProdutoService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
 	
+	public Produto findByCodigo(String codigo) {
+		Optional<Produto> obj = Optional.ofNullable(repo.findByCodigo(codigo));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + codigo + ", Tipo: " + Produto.class.getName()));
+	}
+	
 	public Produto insert (Produto obj) {
 		obj.setId(null);
 		return repo.save(obj);
@@ -49,8 +55,7 @@ public class ProdutoService {
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível remover por que há entidades relacionadas");
-		}
-				
+		}	
 	}
 
 	public List<Produto> findAll() {

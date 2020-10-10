@@ -15,22 +15,49 @@ public class MovimentoDetalhe implements Serializable {
 	@EmbeddedId
 	private MovimentoDetalhePK id = new MovimentoDetalhePK();
 	
+	private Double qtdeHoras;
 	private Integer ciclo;
 	private Integer cavidade;
 	private Double preco;
+	private Integer realizado;
+	private Integer refugado;
 	
 	public MovimentoDetalhe() {
 	}
 
-	public MovimentoDetalhe(Produto produto, Movimento movimento, Turno turno, Equipamento equipamento, Integer ciclo, Integer cavidade, Double preco) {
+	public MovimentoDetalhe(Produto produto, Movimento movimento, Turno turno, Equipamento equipamento, Double qtdeHoras, Integer ciclo, Integer cavidade, Double preco, Integer realizado, Integer refugado) {
 		super();
 		id.setProduto(produto);
 		id.setMovimento(movimento);
 		id.setTurno(turno);
 		id.setEquipamento(equipamento);
+		this.qtdeHoras = qtdeHoras;
 		this.ciclo = ciclo;
 		this.cavidade = cavidade;
 		this.preco = preco;
+		this.realizado = realizado;
+		this.refugado = refugado;
+		
+	}
+	
+	public double getProgramado() {
+		return (((3600 / ciclo) * cavidade) * qtdeHoras);
+
+	}
+	
+	public double getEficiencia() {
+		return (realizado / getProgramado()) * 100 ;
+	}
+	
+	public double getRefugo() {
+		
+		@SuppressWarnings("deprecation")
+		double real = new Double(realizado);
+		
+		@SuppressWarnings("deprecation")
+		double ref = new Double(refugado);
+		
+		return (ref / real) * 100 ;
 	}
 
 	public Produto getProduto() {
@@ -80,6 +107,30 @@ public class MovimentoDetalhe implements Serializable {
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+
+	public Double getQtdeHoras() {
+		return qtdeHoras;
+	}
+
+	public void setQtdeHoras(Double qtdeHoras) {
+		this.qtdeHoras = qtdeHoras;
+	}
+
+	public Integer getRealizado() {
+		return realizado;
+	}
+
+	public void setRealizado(Integer realizado) {
+		this.realizado = realizado;
+	}
+
+	public Integer getRefugado() {
+		return refugado;
+	}
+
+	public void setRefugado(Integer refugado) {
+		this.refugado = refugado;
 	}
 
 	@Override

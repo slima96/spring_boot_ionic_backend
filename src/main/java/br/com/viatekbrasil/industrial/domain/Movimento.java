@@ -46,6 +46,28 @@ public class Movimento implements Serializable {
 		this.status = status.getCod();
 		this.empresa = empresa;
 	}
+	
+	public double getMediaEficiencia() {
+		double soma = 0.0;
+		int qtdeItens = 0;
+		for(MovimentoDetalhe ip : itens) {
+			soma = soma + ip.getEficiencia();
+			qtdeItens += 1;
+		}
+		double media = soma / qtdeItens;
+		return media;
+	}
+	
+	public double getMediaRefugo() {
+		double soma = 0.0;
+		int qtdeItens = 0;
+		for(MovimentoDetalhe ip : itens) {
+			soma = soma + ip.getRefugo();
+			qtdeItens += 1;
+		}
+		double media = soma / qtdeItens;
+		return media;
+	}
 
 	public Integer getId() {
 		return id;

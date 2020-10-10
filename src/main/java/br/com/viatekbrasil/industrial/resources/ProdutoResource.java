@@ -44,6 +44,12 @@ public class ProdutoResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@RequestMapping(value = "/codigo/{codigo}", method = RequestMethod.GET)
+	public ResponseEntity<Produto> findByCodigo(@PathVariable String codigo) {
+		Produto obj = service.findByCodigo(codigo);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ProdutoDTO objDTO, @PathVariable Integer id){
 		Produto obj = service.fromDTO(objDTO);
