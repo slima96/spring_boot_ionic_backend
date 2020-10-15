@@ -54,81 +54,57 @@ public class IndustrialApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Empresa emp1 = new Empresa(null, "Viatek");
-		Empresa emp2 = new Empresa(null, "Viamed");
-		Empresa emp3 = new Empresa(null, "Gplast");
-		Empresa emp4 = new Empresa(null, "Polimero Matriz");
-		Empresa emp5 = new Empresa(null, "Polimero Filial");
-		Empresa emp6 = new Empresa(null, "JCS");
-		Empresa emp7 = new Empresa(null, "Mondial");		
+		Empresa viatek = new Empresa(null, "Viatek");
+		Empresa viamed = new Empresa(null, "Viamed");
+		Empresa gplast = new Empresa(null, "G-plast");
 		
-		Linha l1 = new Linha(null, "Viatek");
-		Linha l2 = new Linha(null, "Mondial");
-		Linha l3 = new Linha(null, "JCS");
+		Linha linha1 = new Linha(null, "Viatek");
+		Linha linha2 = new Linha(null, "Mondial");
+		Linha linha3 = new Linha(null, "JCS");
 		
-		Turno t1 = new Turno(null, "T-1");
-		Turno t2 = new Turno(null, "T-2");
-		Turno t3 = new Turno(null, "T-3");
+		Turno turno1 = new Turno(null, "T-1");
+		Turno turno2 = new Turno(null, "T-2");
+		Turno turno3 = new Turno(null, "T-3");
 		
-		Equipamento eq1 = new Equipamento(null, "mq-01", "maquina 1", "1800DT", emp1);
-		Equipamento eq2 = new Equipamento(null, "mq-02", "maquina 2", "1300DT", emp2);
-		Equipamento eq3 = new Equipamento(null, "mq-03", "maquina 3", "1500DT", emp3);
+		Equipamento equipamento = new Equipamento(null, "MQ-01", "Maquina 1 da Viatek", "1800-DT", viatek);
 		
-		emp1.getEquipamentos().addAll(Arrays.asList(eq1));
-		emp2.getEquipamentos().addAll(Arrays.asList(eq2));
-		emp3.getEquipamentos().addAll(Arrays.asList(eq3));
+		viatek.getEquipamentos().addAll(Arrays.asList(equipamento));
 		
-		Produto p1 = new Produto(null,"10001", "Balde para concreto", 30, 1, 3.00, l1, emp1);
-		Produto p2 = new Produto(null,"10002", "Pivo mondial", 30, 1, 3.00, l2, emp2);
-		Produto p3 = new Produto(null,"10003", "Acoplamento JCS", 30, 1, 3.00, l3, emp3);
+		Produto balde =  new Produto(null, "10001", "Balde para concreto", 35, 1, 3.0, linha1, viatek);
+		Produto pivoMondial = new Produto(null, "1020-01", "Pivo mondial", 20, 4, 1.5, linha2, viamed);
+		Produto acoplamento =  new Produto(null, "102030", "Acoplamento JCS", 20, 6, 1.5, linha3, gplast);
 		
-		Produto p4 = new Produto(null,"20036", "Mangueira corrugada", 30, 1, 3.00, l1, emp1);
-		Produto p5 = new Produto(null,"20020", "Caixa 4x2", 30, 1, 3.00, l1, emp1);
-		Produto p6 = new Produto(null,"20030", "Caixa regulável", 30, 1, 3.00, l1, emp1);
+		viatek.getProdutos().addAll(Arrays.asList(balde));
+		viamed.getProdutos().addAll(Arrays.asList(pivoMondial));
+		gplast.getProdutos().addAll(Arrays.asList(acoplamento));
 		
-		emp1.getProdutos().addAll(Arrays.asList(p1, p4,p5,p6));
-		emp2.getProdutos().addAll(Arrays.asList(p2));
-		emp3.getProdutos().addAll(Arrays.asList(p3));
+		linha1.getProdutos().addAll(Arrays.asList(balde));
+		linha2.getProdutos().addAll(Arrays.asList(pivoMondial));
+		linha3.getProdutos().addAll(Arrays.asList(acoplamento));
 		
-		l1.getProdutos().addAll(Arrays.asList(p1,p4,p5,p6));
-		l2.getProdutos().addAll(Arrays.asList(p2));
-		l3.getProdutos().addAll(Arrays.asList(p3));
+		Movimento movimento = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, viatek, turno1);
 		
-		Movimento m1 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp1);
-		Movimento m2 = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, emp2);
-		Movimento m3 = new Movimento(null, new Date(), StatusMovimento.CONCLUIDO, emp3);
+		viatek.getMovimentos().addAll(Arrays.asList(movimento));
 		
-		emp1.getMovimentos().addAll(Arrays.asList(m1));
-		emp2.getMovimentos().addAll(Arrays.asList(m2));
-		emp3.getMovimentos().addAll(Arrays.asList(m3));
+		turno1.getMovimentos().addAll(Arrays.asList(movimento));
 		
-		MovimentoDetalhe md1 = new MovimentoDetalhe(p1, m1, t1, eq1, 12.0, 10, 2, 3.0, 8000, 2000);
-		MovimentoDetalhe md2 = new MovimentoDetalhe(p2, m1, t2, eq2, 7.0, 10, 2, 3.0, 4000, 1000);
-		MovimentoDetalhe md3 = new MovimentoDetalhe(p3, m1, t3, eq3, 10.0, 10, 2, 3.0, 3000, 300);
+		MovimentoDetalhe mov1 = new MovimentoDetalhe(balde, movimento, equipamento, 12.0, balde.getCiclo(), balde.getCavidade(), balde.getPreco(), 2000, 500);
+		MovimentoDetalhe mov2 = new MovimentoDetalhe(pivoMondial, movimento, equipamento, 12.0, pivoMondial.getCiclo(), pivoMondial.getCavidade(), pivoMondial.getPreco(), 4000, 2000);
+		MovimentoDetalhe mov3 = new MovimentoDetalhe(acoplamento, movimento, equipamento, 12.0, acoplamento.getCiclo(), acoplamento.getCavidade(), acoplamento.getPreco(), 3000, 500);
+
+		movimento.getItens().addAll(Arrays.asList(mov1, mov2, mov3));
+		equipamento.getItens().addAll(Arrays.asList(mov1, mov2, mov3));
+		balde.getItens().addAll(Arrays.asList(mov1));
+		pivoMondial.getItens().addAll(Arrays.asList(mov2));
+		acoplamento.getItens().addAll(Arrays.asList(mov3));
 		
-		m1.getItens().addAll(Arrays.asList(md1, md2, md3));
-		
-		p1.getItens().addAll(Arrays.asList(md1));
-		p2.getItens().addAll(Arrays.asList(md2));
-		p3.getItens().addAll(Arrays.asList(md3));
-		
-		t1.getItens().addAll(Arrays.asList(md1));
-		t2.getItens().addAll(Arrays.asList(md2));
-		t3.getItens().addAll(Arrays.asList(md3));
-		
-		eq1.getItens().addAll(Arrays.asList(md1));
-		eq2.getItens().addAll(Arrays.asList(md2));
-		eq3.getItens().addAll(Arrays.asList(md3));
-		
-		
-		empresaRepository.saveAll(Arrays.asList(emp1, emp2, emp3, emp4, emp5, emp6, emp7));
-		equipamentoRepository.saveAll(Arrays.asList(eq1, eq2, eq3));
-		turnoRepository.saveAll(Arrays.asList(t1, t2, t3));
-		linhaRepository.saveAll(Arrays.asList(l1, l2, l3));
-		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6));
-		movimentoRepository.saveAll(Arrays.asList(m1, m2, m3));
-		movimentoDetalheRepository.saveAll(Arrays.asList(md1,md2,md3));
-		
+		empresaRepository.saveAll(Arrays.asList(viatek, viamed, gplast));
+		linhaRepository.saveAll(Arrays.asList(linha1, linha2, linha3));
+		equipamentoRepository.saveAll(Arrays.asList(equipamento));
+		turnoRepository.saveAll(Arrays.asList(turno1, turno2, turno3));
+		produtoRepository.saveAll(Arrays.asList(balde, pivoMondial, acoplamento));
+		movimentoRepository.saveAll(Arrays.asList(movimento));
+		movimentoDetalheRepository.saveAll(Arrays.asList(mov1, mov2, mov3));
 	}
 
 }

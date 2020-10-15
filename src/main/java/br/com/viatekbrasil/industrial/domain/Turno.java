@@ -1,8 +1,8 @@
 package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,8 +22,8 @@ public class Turno implements Serializable {
 	private String nome;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "id.turno")
-	private Set<MovimentoDetalhe> itens = new HashSet<>();
+	@OneToMany(mappedBy = "turno")
+	private List<Movimento> movimentos = new ArrayList<>();
 	
 	public Turno() {
 	}
@@ -50,12 +50,12 @@ public class Turno implements Serializable {
 		this.nome = nome;
 	}
 
-	public Set<MovimentoDetalhe> getItens() {
-		return itens;
+	public List<Movimento> getMovimentos() {
+		return movimentos;
 	}
 
-	public void setItens(Set<MovimentoDetalhe> itens) {
-		this.itens = itens;
+	public void setMovimentos(List<Movimento> movimentos) {
+		this.movimentos = movimentos;
 	}
 
 	@Override

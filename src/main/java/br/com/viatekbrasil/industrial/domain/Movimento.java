@@ -33,40 +33,23 @@ public class Movimento implements Serializable {
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
 	
+	@ManyToOne
+	@JoinColumn(name = "turno_id")
+	private Turno turno;
+	
 	@OneToMany(mappedBy = "id.movimento")
 	private Set<MovimentoDetalhe> itens = new HashSet<>();
 		
 	public Movimento() {
 	}
 
-	public Movimento(Integer id, Date data, StatusMovimento status, Empresa empresa) {
+	public Movimento(Integer id, Date data, StatusMovimento status, Empresa empresa, Turno turno) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.status = status.getCod();
 		this.empresa = empresa;
-	}
-	
-	public double getMediaEficiencia() {
-		double soma = 0.0;
-		int qtdeItens = 0;
-		for(MovimentoDetalhe ip : itens) {
-			soma = soma + ip.getEficiencia();
-			qtdeItens += 1;
-		}
-		double media = soma / qtdeItens;
-		return media;
-	}
-	
-	public double getMediaRefugo() {
-		double soma = 0.0;
-		int qtdeItens = 0;
-		for(MovimentoDetalhe ip : itens) {
-			soma = soma + ip.getRefugo();
-			qtdeItens += 1;
-		}
-		double media = soma / qtdeItens;
-		return media;
+		this.turno = turno;
 	}
 
 	public Integer getId() {
@@ -101,12 +84,42 @@ public class Movimento implements Serializable {
 		this.empresa = empresa;
 	}
 	
+	public Turno getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Turno turno) {
+		this.turno = turno;
+	}
+
 	public Set<MovimentoDetalhe> getItens() {
 		return itens;
 	}
 
 	public void setItens(Set<MovimentoDetalhe> itens) {
 		this.itens = itens;
+	}
+	
+	public double getMediaEficiencia() {
+		double soma = 0.0;
+		int qtdeItens = 0;
+		for(MovimentoDetalhe ip : itens) {
+			soma = soma + ip.getEficiencia();
+			qtdeItens += 1;
+		}
+		double media = soma / qtdeItens;
+		return media;
+	}
+	
+	public double getMediaRefugo() {
+		double soma = 0.0;
+		int qtdeItens = 0;
+		for(MovimentoDetalhe ip : itens) {
+			soma = soma + ip.getRefugo();
+			qtdeItens += 1;
+		}
+		double media = soma / qtdeItens;
+		return media;
 	}
 
 	@Override

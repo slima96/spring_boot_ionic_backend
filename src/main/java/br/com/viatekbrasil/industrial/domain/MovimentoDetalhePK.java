@@ -22,10 +22,6 @@ public class MovimentoDetalhePK implements Serializable{
 	@JoinColumn(name = "equipamento_id")
 	private Equipamento equipamento;
 	
-	@ManyToOne
-	@JoinColumn(name = "turno_id")
-	private Turno turno;
-	
 	public Movimento getMovimento() {
 		return movimento;
 	}
@@ -44,12 +40,6 @@ public class MovimentoDetalhePK implements Serializable{
 	public void setEquipamento(Equipamento equipamento) {
 		this.equipamento = equipamento;
 	}
-	public Turno getTurno() {
-		return turno;
-	}
-	public void setTurno(Turno turno) {
-		this.turno = turno;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -57,10 +47,8 @@ public class MovimentoDetalhePK implements Serializable{
 		result = prime * result + ((equipamento == null) ? 0 : equipamento.hashCode());
 		result = prime * result + ((movimento == null) ? 0 : movimento.hashCode());
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
-		result = prime * result + ((turno == null) ? 0 : turno.hashCode());
 		return result;
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,11 +73,8 @@ public class MovimentoDetalhePK implements Serializable{
 				return false;
 		} else if (!produto.equals(other.produto))
 			return false;
-		if (turno == null) {
-			if (other.turno != null)
-				return false;
-		} else if (!turno.equals(other.turno))
-			return false;
 		return true;
 	}
+	
+	
 }

@@ -25,11 +25,10 @@ public class MovimentoDetalhe implements Serializable {
 	public MovimentoDetalhe() {
 	}
 
-	public MovimentoDetalhe(Produto produto, Movimento movimento, Turno turno, Equipamento equipamento, Double qtdeHoras, Integer ciclo, Integer cavidade, Double preco, Integer realizado, Integer refugado) {
+	public MovimentoDetalhe(Produto produto, Movimento movimento, Equipamento equipamento, Double qtdeHoras, Integer ciclo, Integer cavidade, Double preco, Integer realizado, Integer refugado) {
 		super();
 		id.setProduto(produto);
 		id.setMovimento(movimento);
-		id.setTurno(turno);
 		id.setEquipamento(equipamento);
 		this.qtdeHoras = qtdeHoras;
 		this.ciclo = ciclo;
@@ -39,29 +38,13 @@ public class MovimentoDetalhe implements Serializable {
 		this.refugado = refugado;
 		
 	}
-	
-	public double getProgramado() {
-		return (((3600 / ciclo) * cavidade) * qtdeHoras);
-
-	}
-	
-	public double getEficiencia() {
-		return (realizado / getProgramado()) * 100 ;
-	}
-	
-	public double getRefugo() {
-		
-		@SuppressWarnings("deprecation")
-		double real = new Double(realizado);
-		
-		@SuppressWarnings("deprecation")
-		double ref = new Double(refugado);
-		
-		return (ref / real) * 100 ;
-	}
 
 	public Produto getProduto() {
 		return id.getProduto();
+	}
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
 	}
 	
 	@JsonIgnore
@@ -69,12 +52,16 @@ public class MovimentoDetalhe implements Serializable {
 		return id.getMovimento();
 	}
 	
-	public Turno getTurno() {
-		return id.getTurno();
+	public void setMovimento(Movimento movimento) {
+		id.setMovimento(movimento);
 	}
 	
 	public Equipamento getEquipamento() {
 		return id.getEquipamento();
+	}
+	
+	public void setEquipamento(Equipamento equipamento) {
+		id.setEquipamento(equipamento);
 	}
 	
 	public MovimentoDetalhePK getId() {
@@ -131,6 +118,26 @@ public class MovimentoDetalhe implements Serializable {
 
 	public void setRefugado(Integer refugado) {
 		this.refugado = refugado;
+	}
+	
+	public double getProgramado() {
+		return (((3600 / ciclo) * cavidade) * qtdeHoras);
+
+	}
+	
+	public double getEficiencia() {
+		return (realizado / getProgramado()) * 100 ;
+	}
+	
+	public double getRefugo() {
+		
+		@SuppressWarnings("deprecation")
+		double real = new Double(realizado);
+		
+		@SuppressWarnings("deprecation")
+		double ref = new Double(refugado);
+		
+		return (ref / real) * 100 ;
 	}
 
 	@Override
