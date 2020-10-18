@@ -36,6 +36,10 @@ public class Movimento implements Serializable {
 	private Empresa empresa;
 	
 	@ManyToOne
+	@JoinColumn(name = "pessoa_id")
+	private Pessoa pessoa;
+	
+	@ManyToOne
 	@JoinColumn(name = "turno_id")
 	private Turno turno;
 	
@@ -45,12 +49,13 @@ public class Movimento implements Serializable {
 	public Movimento() {
 	}
 
-	public Movimento(Integer id, Date data, StatusMovimento status, Empresa empresa, Turno turno) {
+	public Movimento(Integer id, Date data, StatusMovimento status, Empresa empresa, Pessoa pessoa, Turno turno) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.status = status.getCod();
 		this.empresa = empresa;
+		this.pessoa = pessoa;
 		this.turno = turno;
 	}
 
@@ -86,6 +91,14 @@ public class Movimento implements Serializable {
 		this.empresa = empresa;
 	}
 	
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
 	public Turno getTurno() {
 		return turno;
 	}

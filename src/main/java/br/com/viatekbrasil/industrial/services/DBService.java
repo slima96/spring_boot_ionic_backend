@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
@@ -11,6 +12,7 @@ import br.com.viatekbrasil.industrial.domain.Equipamento;
 import br.com.viatekbrasil.industrial.domain.Linha;
 import br.com.viatekbrasil.industrial.domain.Movimento;
 import br.com.viatekbrasil.industrial.domain.MovimentoDetalhe;
+import br.com.viatekbrasil.industrial.domain.Pessoa;
 import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.domain.Turno;
 import br.com.viatekbrasil.industrial.domain.enums.StatusMovimento;
@@ -19,12 +21,15 @@ import br.com.viatekbrasil.industrial.repositories.EquipamentoRepository;
 import br.com.viatekbrasil.industrial.repositories.LinhaRepository;
 import br.com.viatekbrasil.industrial.repositories.MovimentoDetalheRepository;
 import br.com.viatekbrasil.industrial.repositories.MovimentoRepository;
+import br.com.viatekbrasil.industrial.repositories.PessoaRepository;
 import br.com.viatekbrasil.industrial.repositories.ProdutoRepository;
 import br.com.viatekbrasil.industrial.repositories.TurnoRepository;
 
 @Service
 public class DBService {
 
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private EmpresaRepository empresaRepository; 
@@ -46,12 +51,17 @@ public class DBService {
 	
 	@Autowired
 	private MovimentoDetalheRepository movimentoDetalheRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 
 	
 	public void instatiateTestDatabase() {
 		Empresa viatek = new Empresa(null, "Viatek");
 		Empresa viamed = new Empresa(null, "Viamed");
 		Empresa gplast = new Empresa(null, "G-plast");
+		
+		Pessoa pessoa = new Pessoa(null, "Alexsandro Leão Lima", pe.encode("Sl879900"));
 		
 		Linha linha1 = new Linha(null, "Viatek");
 		Linha linha2 = new Linha(null, "Mondial");
@@ -77,7 +87,7 @@ public class DBService {
 		linha2.getProdutos().addAll(Arrays.asList(pivoMondial));
 		linha3.getProdutos().addAll(Arrays.asList(acoplamento));
 		
-		Movimento movimento = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, viatek, turno1);
+		Movimento movimento = new Movimento(null, new Date(), StatusMovimento.EMDIGITACAO, viatek, pessoa, turno1);
 		
 		viatek.getMovimentos().addAll(Arrays.asList(movimento));
 		
@@ -94,6 +104,7 @@ public class DBService {
 		acoplamento.getItens().addAll(Arrays.asList(mov3));
 		
 		empresaRepository.saveAll(Arrays.asList(viatek, viamed, gplast));
+		pessoaRepository.saveAll(Arrays.asList(pessoa));
 		linhaRepository.saveAll(Arrays.asList(linha1, linha2, linha3));
 		equipamentoRepository.saveAll(Arrays.asList(equipamento));
 		turnoRepository.saveAll(Arrays.asList(turno1, turno2, turno3));
