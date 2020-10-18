@@ -65,6 +65,8 @@ public class DBService {
 		Pessoa pessoa = new Pessoa(null, "Alexsandro Leão Lima", "sandro", pe.encode("Sl879900"));
 		pessoa.addPerfil(Perfil.ADMIN);
 		
+		Pessoa usuario = new Pessoa(null, "Alexsandro Lima", "usuario", pe.encode("Sl879900"));
+		
 		Linha linha1 = new Linha(null, "Viatek");
 		Linha linha2 = new Linha(null, "Mondial");
 		Linha linha3 = new Linha(null, "JCS");
@@ -106,7 +108,7 @@ public class DBService {
 		acoplamento.getItens().addAll(Arrays.asList(mov3));
 		
 		empresaRepository.saveAll(Arrays.asList(viatek, viamed, gplast));
-		pessoaRepository.saveAll(Arrays.asList(pessoa));
+		pessoaRepository.saveAll(Arrays.asList(pessoa, usuario));
 		linhaRepository.saveAll(Arrays.asList(linha1, linha2, linha3));
 		equipamentoRepository.saveAll(Arrays.asList(equipamento));
 		turnoRepository.saveAll(Arrays.asList(turno1, turno2, turno3));
