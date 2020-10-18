@@ -18,6 +18,9 @@ public class PessoaDTO implements Serializable {
 	private String nome;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
+	private String usuario;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
 
 	public PessoaDTO() {
@@ -26,6 +29,7 @@ public class PessoaDTO implements Serializable {
 	public PessoaDTO(Pessoa obj) {
 		id = obj.getId();
 		nome = obj.getNome();
+		usuario = obj.getUsuario();
 		senha = obj.getSenha();
 	}
 
@@ -43,6 +47,14 @@ public class PessoaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {

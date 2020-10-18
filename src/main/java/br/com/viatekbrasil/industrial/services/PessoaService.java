@@ -64,7 +64,7 @@ public class PessoaService {
 	}
 	
 	public Pessoa fromDTO(PessoaDTO objDTO) {
-		return new Pessoa(objDTO.getId(), objDTO.getNome(), pe.encode(objDTO.getSenha()));
+		return new Pessoa(objDTO.getId(), objDTO.getNome(), objDTO.getUsuario(), pe.encode(objDTO.getSenha()));
 	}
 	
 	private void updateData(Pessoa newObj, Pessoa obj) {

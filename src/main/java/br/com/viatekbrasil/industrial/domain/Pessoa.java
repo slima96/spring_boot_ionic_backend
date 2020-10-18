@@ -33,6 +33,8 @@ public class Pessoa implements Serializable {
 	@CollectionTable(name="PERFIS")
 	private Set<Integer> perfis = new HashSet<>();	
 	
+	private String usuario;
+	
 	@JsonIgnore
 	private String senha;
 	
@@ -44,10 +46,11 @@ public class Pessoa implements Serializable {
 		addPerfil(Perfil.USUARIO);
 	}
 
-	public Pessoa(Integer id, String nome, String senha) {
+	public Pessoa(Integer id, String nome, String usuario, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.usuario = usuario;
 		this.senha = senha;
 		addPerfil(Perfil.USUARIO);
 	}
@@ -66,6 +69,14 @@ public class Pessoa implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {

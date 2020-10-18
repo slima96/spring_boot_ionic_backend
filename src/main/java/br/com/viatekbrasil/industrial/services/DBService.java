@@ -62,7 +62,7 @@ public class DBService {
 		Empresa viamed = new Empresa(null, "Viamed");
 		Empresa gplast = new Empresa(null, "G-plast");
 		
-		Pessoa pessoa = new Pessoa(null, "Alexsandro Leão Lima", pe.encode("Sl879900"));
+		Pessoa pessoa = new Pessoa(null, "Alexsandro Leão Lima", "sandro", pe.encode("Sl879900"));
 		pessoa.addPerfil(Perfil.ADMIN);
 		
 		Linha linha1 = new Linha(null, "Viatek");
