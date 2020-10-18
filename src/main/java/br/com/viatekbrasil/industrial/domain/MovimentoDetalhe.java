@@ -1,6 +1,7 @@
 package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -126,7 +127,7 @@ public class MovimentoDetalhe implements Serializable {
 	}
 	
 	public double getEficiencia() {
-		return (realizado / getProgramado()) * 100 ;
+		return (realizado / getProgramado()) ;
 	}
 	
 	public double getRefugo() {
@@ -137,7 +138,7 @@ public class MovimentoDetalhe implements Serializable {
 		@SuppressWarnings("deprecation")
 		double ref = new Double(refugado);
 		
-		return (ref / real) * 100 ;
+		return (ref / real) ;
 	}
 
 	@Override
@@ -164,6 +165,39 @@ public class MovimentoDetalhe implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Código do equipamento: ");
+		builder.append(getEquipamento().getCodigo());
+		builder.append("\n");
+		builder.append("Código do Produto: ");
+		builder.append(getProduto().getCodigo());
+		builder.append(" - ");
+		builder.append("Nome do Produto: ");
+		builder.append(getProduto().getDescricao());
+		builder.append(" - ");
+		builder.append("Programado: ");
+		builder.append(NumberFormat.getIntegerInstance().format(getProgramado()));
+		builder.append(" - ");
+		builder.append("Realizado: ");
+		builder.append(NumberFormat.getIntegerInstance().format(getRealizado()));
+		builder.append(" - ");
+		builder.append("Refugao: ");
+		builder.append(NumberFormat.getIntegerInstance().format(getRefugado()));
+		builder.append(" - ");
+		builder.append("Eficiência: ");
+		builder.append(NumberFormat.getPercentInstance().format(getEficiencia()));
+		builder.append(" - ");
+		builder.append("Refugo: ");
+		builder.append(NumberFormat.getPercentInstance().format(getRefugo()));	
+		builder.append("\n");
+		builder.append("\n");
+		
+		return builder.toString();
+	}
+	
 	
 	
 }

@@ -1,6 +1,8 @@
 package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -145,5 +147,44 @@ public class Movimento implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Produção de número: ");
+		builder.append(getId());
+		builder.append("\n");
+		builder.append("Data: ");
+		builder.append(sdf.format(getData()));
+		builder.append(" - ");
+		builder.append("Empresa: ");
+		builder.append(getEmpresa().getNome());
+		builder.append(" - ");
+		builder.append("Turno: ");
+		builder.append(getTurno().getNome());
+		builder.append(" - ");
+		builder.append("Status de produção: ");
+		builder.append(getStatus().getDescricao());
+		builder.append("\n");
+		builder.append("\n");
+		builder.append("Detalhes do lançamento: ");
+		builder.append("\n");
+		builder.append("\n");
+		for(MovimentoDetalhe mv : getItens()) {
+			builder.append(mv.toString());
+		}
+		
+		builder.append("\n");
+		builder.append("Média de eficiência: ");
+		builder.append(NumberFormat.getPercentInstance().format(getMediaEficiencia()));
+		builder.append("\n");
+		builder.append("Média de Refugo: ");
+		builder.append(NumberFormat.getPercentInstance().format(getMediaRefugo()));
+		
+		return builder.toString();
 	}	
+	
+	
 }

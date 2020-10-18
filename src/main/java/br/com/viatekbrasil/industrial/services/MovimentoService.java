@@ -28,6 +28,12 @@ public class MovimentoService {
 	
 	@Autowired
 	private MovimentoDetalheRepository movimentoDetalheRepository;
+	
+	@Autowired
+	private EmpresaService empresaService;
+	
+	@Autowired
+	private TurnoService turnoService;
 
 	public Movimento find(Integer id) {
 		Optional<Movimento> obj = repo.findById(id);
@@ -39,20 +45,23 @@ public class MovimentoService {
 	public Movimento insert(Movimento obj) {
 		obj.setId(null);
 		obj.setData(new Date());
+		obj.setEmpresa(empresaService.find(obj.getEmpresa().getId()));
+		obj.setTurno(turnoService.find(obj.getTurno().getId()));
 		obj.setStatus(StatusMovimento.EMDIGITACAO);
 		
 		obj = repo.save(obj);
 		
 		for (MovimentoDetalhe mv : obj.getItens()) {
-			mv.setCiclo(produtoService.find(mv.getProduto().getId()).getCiclo());
-			mv.setCavidade(produtoService.find(mv.getProduto().getId()).getCavidade());
-			mv.setPreco(produtoService.find(mv.getProduto().getId()).getPreco());
+			mv.setProduto(produtoService.find(mv.getProduto().getId()));
+			mv.setCiclo(mv.getProduto().getCiclo());
+			mv.setCavidade(mv.getProduto().getCavidade());
+			mv.setPreco(mv.getProduto().getPreco());
 			mv.setEquipamento(equipamentoService.find(mv.getEquipamento().getId()));
 			mv.setMovimento(obj);
 		}
 		
 		movimentoDetalheRepository.saveAll(obj.getItens());
-		
+		System.out.println(obj);
 		return obj;
 	}
 }
