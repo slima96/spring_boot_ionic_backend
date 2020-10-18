@@ -15,6 +15,7 @@ import br.com.viatekbrasil.industrial.domain.MovimentoDetalhe;
 import br.com.viatekbrasil.industrial.domain.Pessoa;
 import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.domain.Turno;
+import br.com.viatekbrasil.industrial.domain.enums.Perfil;
 import br.com.viatekbrasil.industrial.domain.enums.StatusMovimento;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
 import br.com.viatekbrasil.industrial.repositories.EquipamentoRepository;
@@ -62,6 +63,7 @@ public class DBService {
 		Empresa gplast = new Empresa(null, "G-plast");
 		
 		Pessoa pessoa = new Pessoa(null, "Alexsandro Leão Lima", pe.encode("Sl879900"));
+		pessoa.addPerfil(Perfil.ADMIN);
 		
 		Linha linha1 = new Linha(null, "Viatek");
 		Linha linha2 = new Linha(null, "Mondial");

@@ -2,15 +2,23 @@ package br.com.viatekbrasil.industrial.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.viatekbrasil.industrial.domain.enums.Perfil;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -21,6 +29,10 @@ public class Pessoa implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();	
+	
 	@JsonIgnore
 	private String senha;
 	
@@ -29,6 +41,7 @@ public class Pessoa implements Serializable {
 	private List<Movimento> movimentos = new ArrayList<>();
 	
 	public Pessoa() {
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Pessoa(Integer id, String nome, String senha) {
@@ -36,6 +49,7 @@ public class Pessoa implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.senha = senha;
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Integer getId() {
@@ -60,6 +74,14 @@ public class Pessoa implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Set<Perfil> getPerfis(){
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void  addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 
 	public List<Movimento> getMovimentos() {
