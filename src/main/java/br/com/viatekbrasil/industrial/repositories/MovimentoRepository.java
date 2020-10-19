@@ -7,5 +7,5 @@ import br.com.viatekbrasil.industrial.domain.Movimento;
 
 @Repository
 public interface MovimentoRepository extends JpaRepository<Movimento, Integer> {
-
+	
 }

@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +15,8 @@ import br.com.viatekbrasil.industrial.domain.MovimentoDetalhe;
 import br.com.viatekbrasil.industrial.domain.enums.StatusMovimento;
 import br.com.viatekbrasil.industrial.repositories.MovimentoDetalheRepository;
 import br.com.viatekbrasil.industrial.repositories.MovimentoRepository;
+import br.com.viatekbrasil.industrial.security.UserSS;
+import br.com.viatekbrasil.industrial.services.exceptions.AuthorizationException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -64,4 +69,13 @@ public class MovimentoService {
 		System.out.println(obj);
 		return obj;
 	}
+	
+	public Page<Movimento> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
+	}	
 }
