@@ -12,8 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.viatekbrasil.industrial.domain.Pessoa;
+import br.com.viatekbrasil.industrial.domain.enums.Perfil;
 import br.com.viatekbrasil.industrial.dto.PessoaDTO;
 import br.com.viatekbrasil.industrial.repositories.PessoaRepository;
+import br.com.viatekbrasil.industrial.security.UserSS;
+import br.com.viatekbrasil.industrial.services.exceptions.AuthorizationException;
 import br.com.viatekbrasil.industrial.services.exceptions.DataIntegrityException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
 
@@ -26,7 +29,14 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository repo;
 
+	@SuppressWarnings("null")
 	public Pessoa find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Pessoa> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pessoa.class.getName()));
