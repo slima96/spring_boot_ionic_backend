@@ -1,5 +1,6 @@
 package br.com.viatekbrasil.industrial.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.viatekbrasil.industrial.domain.Pessoa;
 import br.com.viatekbrasil.industrial.domain.enums.Perfil;
@@ -28,6 +30,9 @@ public class PessoaService {
 	
 	@Autowired
 	private PessoaRepository repo;
+	
+	@Autowired
+	private S3Service s3Service;
 
 	@SuppressWarnings("null")
 	public Pessoa find(Integer id) {
@@ -80,5 +85,9 @@ public class PessoaService {
 	private void updateData(Pessoa newObj, Pessoa obj) {
 		newObj.setNome(obj.getNome());
 		
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multiPartFile) {
+		return s3Service.uploadFile(multiPartFile);
 	}
 }
