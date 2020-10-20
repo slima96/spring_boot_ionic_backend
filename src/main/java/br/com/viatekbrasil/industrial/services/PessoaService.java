@@ -41,6 +41,9 @@ public class PessoaService {
 	
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private Integer size;
 
 	@SuppressWarnings("null")
 	public Pessoa find(Integer id) {
@@ -102,6 +105,9 @@ public class PessoaService {
 		}
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multiPartFile);
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		
 		String fileName = prefix + user.getId() + ".jpg";
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
