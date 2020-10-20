@@ -42,6 +42,8 @@ public class Pessoa implements Serializable {
 	@OneToMany(mappedBy = "empresa")
 	private List<Movimento> movimentos = new ArrayList<>();
 	
+	private String imageUrl;
+	
 	public Pessoa() {
 		addPerfil(Perfil.USUARIO);
 	}
@@ -101,6 +103,14 @@ public class Pessoa implements Serializable {
 
 	public void setMovimentos(List<Movimento> movimentos) {
 		this.movimentos = movimentos;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	@Override

@@ -88,6 +88,18 @@ public class PessoaService {
 	}
 	
 	public URI uploadProfilePicture(MultipartFile multiPartFile) {
-		return s3Service.uploadFile(multiPartFile);
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		
+		URI uri = s3Service.uploadFile(multiPartFile);
+		
+		Pessoa pes = repo.findByUsuario(user.getUsername());
+		pes.setImageUrl(uri.toString());
+		repo.save(pes);		
+		
+		return uri;
 	}
 }
