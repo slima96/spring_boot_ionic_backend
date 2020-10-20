@@ -45,7 +45,6 @@ public class PessoaService {
 	@Value("${img.profile.size}")
 	private Integer size;
 
-	@SuppressWarnings("null")
 	public Pessoa find(Integer id) {
 		
 		UserSS user = UserService.authenticated();
@@ -82,6 +81,20 @@ public class PessoaService {
 
 	public List<Pessoa> findAll() {
 		return repo.findAll();
+	}
+	
+	public Pessoa findByUsuario(String usuario) {
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !usuario.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Pessoa obj = repo.findByUsuario(usuario);
+		if(obj == null) {
+			throw new AuthorizationException("Objeto não encontrado! Id: " + user.getId()
+					+ ", Tipo: " + Pessoa.class.getName());
+		}
+		return obj;
 	}
 	
 	public Page<Pessoa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){

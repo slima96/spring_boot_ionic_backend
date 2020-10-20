@@ -36,6 +36,12 @@ public class PessoaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
+	public ResponseEntity<Pessoa> find(@RequestParam(value = "value") String usuario){
+		Pessoa obj = service.findByUsuario(usuario);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody PessoaDTO objDTO){
