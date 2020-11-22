@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.viatekbrasil.industrial.domain.Pessoa;
 import br.com.viatekbrasil.industrial.domain.enums.Perfil;
 import br.com.viatekbrasil.industrial.dto.PessoaDTO;
+import br.com.viatekbrasil.industrial.dto.PessoaNewDTO;
 import br.com.viatekbrasil.industrial.repositories.PessoaRepository;
 import br.com.viatekbrasil.industrial.security.UserSS;
 import br.com.viatekbrasil.industrial.services.exceptions.AuthorizationException;
@@ -104,6 +105,11 @@ public class PessoaService {
 	
 	public Pessoa fromDTO(PessoaDTO objDTO) {
 		return new Pessoa(objDTO.getId(), objDTO.getNome(), objDTO.getUsuario(), pe.encode(objDTO.getSenha()));
+	}
+	
+	public Pessoa fromDTO(PessoaNewDTO objDTO) {
+		Pessoa pes = new Pessoa(null, objDTO.getNome(), objDTO.getUsuario(), pe.encode(objDTO.getSenha()));
+		return pes;
 	}
 	
 	private void updateData(Pessoa newObj, Pessoa obj) {

@@ -7,7 +7,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.viatekbrasil.industrial.domain.Pessoa;
+import br.com.viatekbrasil.industrial.services.validation.PessoaUpdate;
 
+@PessoaUpdate
 public class PessoaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +20,7 @@ public class PessoaDTO implements Serializable {
 	private String nome;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
-	private String usuario;
+	private String Usuario;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
@@ -29,7 +31,7 @@ public class PessoaDTO implements Serializable {
 	public PessoaDTO(Pessoa obj) {
 		id = obj.getId();
 		nome = obj.getNome();
-		usuario = obj.getUsuario();
+		Usuario = obj.getUsuario();
 		senha = obj.getSenha();
 	}
 
@@ -50,11 +52,11 @@ public class PessoaDTO implements Serializable {
 	}
 
 	public String getUsuario() {
-		return usuario;
+		return Usuario;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsuario(String Usuario) {
+		this.Usuario = Usuario;
 	}
 
 	public String getSenha() {

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.viatekbrasil.industrial.domain.Pessoa;
 import br.com.viatekbrasil.industrial.dto.PessoaDTO;
+import br.com.viatekbrasil.industrial.dto.PessoaNewDTO;
 import br.com.viatekbrasil.industrial.services.PessoaService;
 
 @RestController
@@ -44,7 +45,7 @@ public class PessoaResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody PessoaDTO objDTO){
+	public ResponseEntity<Void> insert(@Valid @RequestBody PessoaNewDTO objDTO){
 		Pessoa obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
