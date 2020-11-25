@@ -89,7 +89,7 @@ public class DBService {
 		Produto p6 =  new Produto(null, "10007", "Produto 6", 35, 1, 3.0, linha1, viatek);
 		Produto p7 =  new Produto(null, "10008", "Produto 7", 35, 1, 3.0, linha1, viatek);
 		Produto p8 =  new Produto(null, "10009", "Produto 8", 35, 1, 3.0, linha1, viatek);
-		Produto p9 =  new Produto(null, "10010", "Produto 9", 35, 1, 3.0, linha1, viatek);
+/*		Produto p9 =  new Produto(null, "10010", "Produto 9", 35, 1, 3.0, linha1, viatek);
 		Produto p10 =  new Produto(null, "10011", "Produto 10", 35, 1, 3.0, linha1, viatek);
 		Produto p11 =  new Produto(null, "10012", "Produto 11", 35, 1, 3.0, linha1, viatek);
 		Produto p12 =  new Produto(null, "10013", "Produto 12", 35, 1, 3.0, linha1, viatek);
@@ -121,17 +121,17 @@ public class DBService {
 		Produto p38 =  new Produto(null, "10039", "Produto 38", 35, 1, 3.0, linha1, viatek);
 		Produto p39 =  new Produto(null, "10040", "Produto 39", 35, 1, 3.0, linha1, viatek);
 		Produto p40 =  new Produto(null, "10041", "Produto 40", 35, 1, 3.0, linha1, viatek);
-		
+*/		
 
-		viatek.getProdutos().addAll(Arrays.asList(balde, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,
+		viatek.getProdutos().addAll(Arrays.asList(balde, p1, p2, p3, p4, p5, p6, p7, p8 /*, p9, p10, p11, p12, p13, p14,
 													p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30,
-													p31, p32, p33, p34, p35, p36, p37, p38, p39, p40));
+													p31, p32, p33, p34, p35, p36, p37, p38, p39, p40*/));
 		viamed.getProdutos().addAll(Arrays.asList(pivoMondial));
 		gplast.getProdutos().addAll(Arrays.asList(acoplamento));
 		
-		linha1.getProdutos().addAll(Arrays.asList(balde, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,
+		linha1.getProdutos().addAll(Arrays.asList(balde, p1, p2, p3, p4, p5, p6, p7, p8 /*, p9, p10, p11, p12, p13, p14,
 													p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30,
-													p31, p32, p33, p34, p35, p36, p37, p38, p39, p40));
+													p31, p32, p33, p34, p35, p36, p37, p38, p39, p40*/));
 		linha2.getProdutos().addAll(Arrays.asList(pivoMondial));
 		linha3.getProdutos().addAll(Arrays.asList(acoplamento));
 		
@@ -156,9 +156,9 @@ public class DBService {
 		linhaRepository.saveAll(Arrays.asList(linha1, linha2, linha3));
 		equipamentoRepository.saveAll(Arrays.asList(equipamento));
 		turnoRepository.saveAll(Arrays.asList(turno1, turno2, turno3));
-		produtoRepository.saveAll(Arrays.asList(balde, pivoMondial, acoplamento, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,
+		produtoRepository.saveAll(Arrays.asList(balde, pivoMondial, acoplamento, p1, p2, p3, p4, p5, p6, p7, p8 /*, p9, p10, p11, p12, p13, p14,
 													p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30,
-													p31, p32, p33, p34, p35, p36, p37, p38, p39, p40));
+													p31, p32, p33, p34, p35, p36, p37, p38, p39, p40*/));
 		movimentoRepository.saveAll(Arrays.asList(movimento));
 		movimentoDetalheRepository.saveAll(Arrays.asList(mov1, mov2, mov3));
 	}
