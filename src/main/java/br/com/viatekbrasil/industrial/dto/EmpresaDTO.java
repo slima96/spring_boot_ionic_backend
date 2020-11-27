@@ -7,7 +7,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
+import br.com.viatekbrasil.industrial.services.validation.EmpresaUpdate;
 
+@EmpresaUpdate
 public class EmpresaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

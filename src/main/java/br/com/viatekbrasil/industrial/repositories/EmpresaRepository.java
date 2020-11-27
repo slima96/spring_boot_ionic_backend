@@ -8,4 +8,5 @@ import br.com.viatekbrasil.industrial.domain.Empresa;
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 
+	Empresa findByNome(String nome);
 }

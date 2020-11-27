@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.dto.EmpresaDTO;
+import br.com.viatekbrasil.industrial.dto.EmpresaNewDTO;
 import br.com.viatekbrasil.industrial.services.EmpresaService;
 
 @RestController
@@ -37,7 +38,7 @@ public class EmpresaResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody EmpresaDTO objDTO){
+	public ResponseEntity<Void> insert(@Valid @RequestBody EmpresaNewDTO objDTO){
 		Empresa obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

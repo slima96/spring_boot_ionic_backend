@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.dto.EmpresaDTO;
+import br.com.viatekbrasil.industrial.dto.EmpresaNewDTO;
 import br.com.viatekbrasil.industrial.repositories.EmpresaRepository;
 import br.com.viatekbrasil.industrial.services.exceptions.DataIntegrityException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
@@ -61,6 +62,11 @@ public class EmpresaService {
 	
 	public Empresa fromDTO(EmpresaDTO objDTO) {
 		return new Empresa(objDTO.getId(), objDTO.getNome());
+	}
+	
+	public Empresa fromDTO(EmpresaNewDTO objDTO) {
+		Empresa emp = new Empresa(null, objDTO.getNome());
+		return emp;
 	}
 	
 	private void updateData(Empresa newObj, Empresa obj) {
