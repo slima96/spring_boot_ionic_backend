@@ -76,6 +76,5 @@ public class ProdutoNewDTO implements Serializable {
 	public void setLinhaid(Integer linhaid) {
 		this.linhaid = linhaid;
 	}
-
 	
 }

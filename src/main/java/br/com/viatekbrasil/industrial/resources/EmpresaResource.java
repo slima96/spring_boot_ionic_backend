@@ -45,7 +45,7 @@ public class EmpresaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	 @PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody EmpresaDTO objDTO, @PathVariable Integer id){
 		Empresa obj = service.fromDTO(objDTO);
