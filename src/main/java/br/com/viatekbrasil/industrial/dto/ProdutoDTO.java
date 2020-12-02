@@ -2,10 +2,10 @@ package br.com.viatekbrasil.industrial.dto;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotEmpty;
-
 import org.hibernate.validator.constraints.Length;
 
+import br.com.viatekbrasil.industrial.domain.Empresa;
+import br.com.viatekbrasil.industrial.domain.Linha;
 import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.services.validation.ProdutoUpdate;
 
@@ -15,10 +15,8 @@ public class ProdutoDTO implements Serializable {
 	
 	private Integer id;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
 	private String codigo;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String descricao;
 	
@@ -27,6 +25,10 @@ public class ProdutoDTO implements Serializable {
 	private Integer cavidade;
 
 	private Double preco;
+	
+	private Empresa empresa;
+	
+	private Linha linha;
 	
 	public ProdutoDTO() {
 	}
@@ -38,6 +40,8 @@ public class ProdutoDTO implements Serializable {
 		ciclo = obj.getCiclo();
 		cavidade = obj.getCavidade();
 		preco = obj.getPreco();
+		empresa = obj.getEmpresa();
+		linha = obj.getLinha();
 	}
 
 	public Integer getId() {
@@ -87,6 +91,20 @@ public class ProdutoDTO implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-	
-	
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Linha getLinha() {
+		return linha;
+	}
+
+	public void setLinha(Linha linha) {
+		this.linha = linha;
+	}	
 }

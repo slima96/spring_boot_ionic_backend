@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.viatekbrasil.industrial.domain.Empresa;
 import br.com.viatekbrasil.industrial.domain.Linha;
@@ -24,6 +25,12 @@ public class ProdutoService {
 	
 	@Autowired
 	private ProdutoRepository repo;
+	
+	@Autowired
+	private EmpresaService empresaService;
+	
+	@Autowired
+	private LinhaService linhaService;
 
 	public Produto find(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
@@ -37,15 +44,22 @@ public class ProdutoService {
 				"Objeto não encontrado! Id: " + codigo + ", Tipo: " + Produto.class.getName()));
 	}
 	
+	@Transactional
 	public Produto insert (Produto obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		obj.setLinha(linhaService.find(obj.getLinha().getId()));
+//		obj.setEmpresa(empresaService.find(2));
+		obj.setEmpresa(empresaService.find(obj.getEmpresa().getId()));
+		
+		obj = repo.save(obj);
+		
+		return obj;
 	}
 	
 	public Produto update(Produto obj) {
 		Produto newObj = find(obj.getId());
 		updateData(newObj, obj);
-		return repo.save(newObj);
+		return repo.save(obj);
 	}
 
 	public void delete(Integer id) {
@@ -67,15 +81,53 @@ public class ProdutoService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Produto fromDTO(ProdutoDTO objDTO) {
-		return new Produto(objDTO.getId(), objDTO.getCodigo(), objDTO.getDescricao(), objDTO.getCiclo(), objDTO.getCavidade(), objDTO.getPreco(), null, null);
+//	public Produto fromDTO(ProdutoDTO objDTO) {
+//		return new Produto(
+//				objDTO.getId(), 
+//				objDTO.getCodigo(), 
+//				objDTO.getDescricao(), 
+//				objDTO.getCiclo(), 
+//				objDTO.getCavidade(), 
+//				objDTO.getPreco(), 
+//				objDTO.getLinha(), 
+//				objDTO.getEmpresa());
+//	}
+	
+	public Produto fromDTO(ProdutoDTO objDTO, Integer id) {
+		
+		Produto aux = find(id);
+		
+		Produto newProduto = new Produto();
+		
+		newProduto.setId(id);
+		
+		newProduto.setCodigo(objDTO.getCodigo() != null  ? objDTO.getCodigo() : aux.getCodigo());
+		newProduto.setDescricao(objDTO.getDescricao() != null ? objDTO.getDescricao() : aux.getDescricao());
+		newProduto.setCiclo(objDTO.getCiclo() != null ? objDTO.getCiclo() : aux.getCiclo());
+		newProduto.setCavidade(objDTO.getCavidade() != null ? objDTO.getCavidade() : aux.getCavidade());
+		newProduto.setPreco(objDTO.getPreco() != null ? objDTO.getPreco() : aux.getPreco());
+		newProduto.setEmpresa(objDTO.getEmpresa() != null ? objDTO.getEmpresa() : aux.getEmpresa());
+		newProduto.setLinha(objDTO.getLinha() != null ? objDTO.getLinha() : aux.getLinha());
+		
+		return newProduto;
 	}
 	
 	public Produto fromDTO(ProdutoNewDTO objDTO) {
 		Linha linha = new Linha(objDTO.getLinhaid(), null);
 		Empresa empresa = new Empresa(objDTO.getEmpresaid(), null);
 		
-		Produto prod = new Produto(null, objDTO.getCodigo(), objDTO.getDescricao(), objDTO.getCiclo(), objDTO.getCavidade(), objDTO.getPreco(), linha, empresa);
+		linha.setNome(linhaService.find(linha.getId()).getNome());
+		empresa.setNome(empresaService.find(empresa.getId()).getNome());
+		
+		Produto prod = new Produto(
+				null, 
+				objDTO.getCodigo(), 
+				objDTO.getDescricao(), 
+				objDTO.getCiclo(), 
+				objDTO.getCavidade(), 
+				objDTO.getPreco(), 
+				linha, 
+				empresa);
 		
 		return prod;
 	}
@@ -86,5 +138,7 @@ public class ProdutoService {
 		newObj.setCiclo(obj.getCiclo());
 		newObj.setCavidade(obj.getCavidade());
 		newObj.setPreco(obj.getPreco());
+		newObj.setEmpresa(obj.getEmpresa());
+		newObj.setLinha(obj.getLinha());
 	}
 }

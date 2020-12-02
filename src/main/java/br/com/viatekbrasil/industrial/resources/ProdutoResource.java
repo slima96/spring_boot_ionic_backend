@@ -32,13 +32,22 @@ public class ProdutoResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ProdutoNewDTO objDTO){
+	public ResponseEntity<Void> insert(@Valid @RequestBody ProdutoNewDTO objDTO	){
 		Produto obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+//	@PreAuthorize("hasAnyRole('ADMIN')")
+//	@RequestMapping(method = RequestMethod.POST)
+//	public ResponseEntity<Void> insert(@Valid @RequestBody Produto obj){
+//		obj = service.insert(obj);
+//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+//				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+//		return ResponseEntity.created(uri).build();
+//	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> find(@PathVariable Integer id) {
@@ -55,8 +64,7 @@ public class ProdutoResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ProdutoDTO objDTO, @PathVariable Integer id){
-		Produto obj = service.fromDTO(objDTO);
-		obj.setId(id);
+		Produto obj = service.fromDTO(objDTO, id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
