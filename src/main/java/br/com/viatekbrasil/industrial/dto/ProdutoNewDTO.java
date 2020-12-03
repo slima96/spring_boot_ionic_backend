@@ -2,23 +2,58 @@ package br.com.viatekbrasil.industrial.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import br.com.viatekbrasil.industrial.domain.Empresa;
+import br.com.viatekbrasil.industrial.domain.Linha;
+import br.com.viatekbrasil.industrial.domain.Produto;
 import br.com.viatekbrasil.industrial.services.validation.ProdutoInsert;
 
 @ProdutoInsert
 public class ProdutoNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String codigo;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String descricao;
+	
 	private Integer ciclo;
+
 	private Integer cavidade;
+
 	private Double preco;
 	
-	private Integer empresaid;
+	private Empresa empresa;
 	
-	private Integer linhaid;
+	private Linha linha;
 	
 	public ProdutoNewDTO() {
+	}
+	
+	public ProdutoNewDTO(Produto obj) {
+		id = obj.getId();
+		codigo = obj.getCodigo();
+		descricao = obj.getDescricao();
+		ciclo = obj.getCiclo();
+		cavidade = obj.getCavidade();
+		preco = obj.getPreco();
+		empresa = obj.getEmpresa();
+		linha = obj.getLinha();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getCodigo() {
@@ -61,20 +96,19 @@ public class ProdutoNewDTO implements Serializable {
 		this.preco = preco;
 	}
 
-	public Integer getEmpresaid() {
-		return empresaid;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
-	public void setEmpresaid(Integer empresaid) {
-		this.empresaid = empresaid;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
-	public Integer getLinhaid() {
-		return linhaid;
+	public Linha getLinha() {
+		return linha;
 	}
 
-	public void setLinhaid(Integer linhaid) {
-		this.linhaid = linhaid;
-	}
-	
+	public void setLinha(Linha linha) {
+		this.linha = linha;
+	}	
 }

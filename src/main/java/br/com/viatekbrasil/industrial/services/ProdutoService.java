@@ -47,12 +47,8 @@ public class ProdutoService {
 	@Transactional
 	public Produto insert (Produto obj) {
 		obj.setId(null);
-		obj.setLinha(linhaService.find(obj.getLinha().getId()));
-//		obj.setEmpresa(empresaService.find(2));
-		obj.setEmpresa(empresaService.find(obj.getEmpresa().getId()));
-		
+	
 		obj = repo.save(obj);
-		
 		return obj;
 	}
 	
@@ -113,11 +109,8 @@ public class ProdutoService {
 	}
 	
 	public Produto fromDTO(ProdutoNewDTO objDTO) {
-		Linha linha = new Linha(objDTO.getLinhaid(), null);
-		Empresa empresa = new Empresa(objDTO.getEmpresaid(), null);
-		
-		linha.setNome(linhaService.find(linha.getId()).getNome());
-		empresa.setNome(empresaService.find(empresa.getId()).getNome());
+		Linha linha = linhaService.find(objDTO.getLinha().getId());
+		Empresa empresa = empresaService.find(objDTO.getEmpresa().getId());
 		
 		Produto prod = new Produto(
 				null, 
