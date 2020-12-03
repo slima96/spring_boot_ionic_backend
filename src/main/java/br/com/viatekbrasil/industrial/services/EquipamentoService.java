@@ -1,8 +1,10 @@
 package br.com.viatekbrasil.industrial.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,7 @@ import br.com.viatekbrasil.industrial.domain.Equipamento;
 import br.com.viatekbrasil.industrial.dto.EquipamentoDTO;
 import br.com.viatekbrasil.industrial.dto.EquipamentoNewDTO;
 import br.com.viatekbrasil.industrial.repositories.EquipamentoRepository;
+import br.com.viatekbrasil.industrial.services.exceptions.DataIntegrityException;
 import br.com.viatekbrasil.industrial.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -40,6 +43,21 @@ public class EquipamentoService {
 		Equipamento newObj = find(obj.getId());
 		updateData(newObj, obj);
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível remover por que há entidades relacionadas");
+		}
+				
+	}
+	
+	public List<Equipamento> findAll() {
+		return repo.findAll();
 	}
 
 	public Equipamento fromDTO(EquipamentoDTO objDTO, Integer id) {
