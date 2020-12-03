@@ -35,9 +35,26 @@ public class EquipamentoService {
 		obj = repo.save(obj);
 		return obj;
 	}
+	
+	public Equipamento update(Equipamento obj) {
+		Equipamento newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(obj);
+	}
 
-	public Equipamento fromDTO(EquipamentoDTO objDTO) {
-		return new Equipamento(objDTO.getId(), objDTO.getCodigo(), objDTO.getDescricao(), objDTO.getTonelagem(), null);
+	public Equipamento fromDTO(EquipamentoDTO objDTO, Integer id) {
+		Equipamento obj = find(id);
+		
+		Equipamento newObj = new Equipamento();
+		
+		newObj.setId(id);
+		
+		newObj.setCodigo(objDTO.getCodigo() != null  ? objDTO.getCodigo() : obj.getCodigo());
+		newObj.setDescricao(objDTO.getDescricao() != null ? objDTO.getDescricao() : obj.getDescricao());
+		newObj.setTonelagem(objDTO.getTonelagem() != null ? objDTO.getTonelagem() : obj.getTonelagem());
+		newObj.setEmpresa(objDTO.getEmpresa() != null ? objDTO.getEmpresa() : obj.getEmpresa());	
+		
+		return newObj;
 	}
 
 	public Equipamento fromDTO(EquipamentoNewDTO objDTO) {
@@ -51,6 +68,13 @@ public class EquipamentoService {
 				empresa);
 		
 		return obj;
+	}
+	
+	private void updateData(Equipamento newObj, Equipamento obj) {
+		newObj.setCodigo(obj.getCodigo());
+		newObj.setDescricao(obj.getDescricao());
+		newObj.setTonelagem(obj.getTonelagem());
+		newObj.setEmpresa(obj.getEmpresa());
 	}
 
 }

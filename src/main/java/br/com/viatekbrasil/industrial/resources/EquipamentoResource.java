@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.viatekbrasil.industrial.domain.Equipamento;
+import br.com.viatekbrasil.industrial.dto.EquipamentoDTO;
 import br.com.viatekbrasil.industrial.dto.EquipamentoNewDTO;
 import br.com.viatekbrasil.industrial.services.EquipamentoService;
 
@@ -40,5 +41,13 @@ public class EquipamentoResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 		                      
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody EquipamentoDTO objDTO, @PathVariable Integer id){
+		Equipamento obj = service.fromDTO(objDTO, id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 }
