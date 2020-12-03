@@ -8,4 +8,5 @@ import br.com.viatekbrasil.industrial.domain.Equipamento;
 @Repository
 public interface EquipamentoRepository extends JpaRepository<Equipamento, Integer> {
 
+	Equipamento findByCodigo(String codigo);
 }
